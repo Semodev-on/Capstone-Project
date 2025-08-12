@@ -1,0 +1,62 @@
+{% load static %}
+
+<style>
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    padding: 0.5rem;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.navbar-brand-rect {
+    display: flex;
+    align-items: center;
+    background: #fbce00; /* Rectangle container color */
+    border-radius: 8px;
+    padding: 8px 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.navbar-brand-rect img {
+    width: 70px;
+    height: 70px;
+    margin-right: 0.5rem;
+    object-fit: contain;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.navbar-brand-text {
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+}
+
+
+
+
+</style>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="nav-container">
+        <span class="navbar-brand-rect">
+            <img src="{% static 'media/logo.jpg' %}" alt="MathCUNEK Logo">
+            <span class="navbar-brand-text">MathCUNEK</span>
+        </span>
+    </div>
+</nav>

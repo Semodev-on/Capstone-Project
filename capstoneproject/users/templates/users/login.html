@@ -1,0 +1,187 @@
+{% extends 'layout.html' %} 
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+
+{% include 'logo.html' %}
+
+
+<style>
+         body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            /* Example wallpaper: gradient + fallback color */
+            background-image: url("{% static 'media/loginbg.jpg' %}");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .login-wrapper {    
+            max-width: 750px; /* Box width: 600px → 650px (moderately wider) */
+            margin: 50px auto;
+            padding: 0;
+            background: white;
+            border-radius: 12px; /* Border radius: Moderately increased for rounded corners */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Shadow: Moderately enhanced */
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            border: 1px solid #ddd;
+        }
+
+        .login-title {
+            background-color: #fbce00;
+            color: black;
+            text-align: center;
+            margin: 0;
+            padding: 40px 85px; /* Title padding: 25px 15px → 30px 25px (slightly bigger header) */
+            font-size: 26px; /* Title font: 26px → 30px (moderately bigger) */
+            font-weight: bold;
+        }
+
+        form {
+            padding: 40px; /* Form padding: 30px → 40px (moderate internal space) */
+        }
+
+        .form-group {
+            margin-bottom: 25px; /* Field spacing: 20px → 25px (moderate space between fields) */
+        }
+
+        .form-group label {
+            font-weight: bold;
+            font-size: 18px; /* Label font: 16px → 18px (moderately bigger labels) */
+            margin-bottom: 10px;
+            display: block;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px; /* Input padding: 14px → 16px (slightly taller fields) */
+            border: 1px solid #ccc;
+            border-radius: 8px; /* Border radius: Moderately increased */
+            font-size: 17px; /* Input font: 16px → 17px (slightly bigger text in fields) */
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #fbce00;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(251, 206, 0, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px; /* Button padding: 14px → 16px (moderately bigger button) */
+            background: #007bff;
+            border: none;
+            border-radius: 8px; /* Border radius: Moderately increased */
+            color: white;
+            font-size: 20px; /* Button font: 18px → 20px (moderately bigger button text) */
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+        .register-link {
+            background-color: #007bff;
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .register-link p {
+            margin: 0;
+        }
+
+        .register-link a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+            transition: opacity 0.3s ease;
+            font-size: 16px;
+        }
+
+        .register-link a:hover {
+            opacity: 0.8;
+        }
+
+        .alert {
+            padding: 15px 40px;
+            margin: 0 0 25px 0;
+            border-radius: 0;
+            font-size: 16px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+</style>
+
+<div class="login-wrapper">
+    <h1 class="login-title">Login to Your Account</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Email or Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="error">{{ form.password.errors }}</div>
+            {% endif %}
+        </div>
+        
+        {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors }}</div>
+        {% endif %}
+        
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+    
+    <div class="register-link">
+        <p>Don't have an account? <a href="{% url 'users:register' %}">Register here</a></p>
+    </div>
+</div>
+{% endblock %}

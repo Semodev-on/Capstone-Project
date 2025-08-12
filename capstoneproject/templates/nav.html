@@ -1,0 +1,78 @@
+{% load static %}
+
+<style>
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fbce00;
+    padding: 0.5rem;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    color: black; /* ADJUST MathCUNEK TEXT COLOR HERE */
+    text-decoration: none;
+    font-size: 1.5rem; /* ADJUST MathCUNEK TEXT SIZE HERE */
+    font-weight: bold; /* ADJUST MathCUNEK TEXT WEIGHT HERE */
+}
+
+.navbar-brand img {
+    width: 70px;
+    height: 70px;
+    margin-right: 0.5rem;
+    object-fit: contain;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.profile-link {
+    color: black; /* ADJUST PROFILE TEXT COLOR HERE */
+    text-decoration: none;
+    font-size: 1.2rem; /* ADJUST PROFILE TEXT SIZE HERE */
+    font-weight: bold; 
+    padding: 0.5rem 1rem; /* ADJUST PROFILE TEXT SPACING HERE */
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.profile-link img {
+    width: 70px;
+    height: 70px;
+    margin-right: 0.5rem;
+    object-fit: contain;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.profile-link:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+</style>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="nav-container">
+        <a class="navbar-brand" href="/">
+            <img src="{% static 'media/logo.jpg' %}" alt="MathCUNEK Logo">
+            MathCUNEK
+        </a>
+        <a class="profile-link" href="/profile">
+            <img src = {% static 'media/defaultpic.png'%} alt = "profile">
+            Profile
+        </a>
+
+    </div>
+</nav>

@@ -1,0 +1,52 @@
+{%  extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}  
+
+{% include 'nav.html' %}
+
+<style>
+/* Teacher image positioning */
+.teacher-container {
+    position: fixed;
+    top: 69%;
+    left: 60px; /* Changed from right to left side */
+    transform: translateY(-50%);
+    z-index: 500;
+}
+
+.teacher-image {
+    width: 350px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+    <!-- Math category buttons (top right) -->
+    <div class="button-container">
+        <a href="#" class="round-button">Geometry</a>
+        <a href="#" class="round-button">Perimeter</a>
+        <a href="#" class="round-button">Whole Numbers</a>
+        <a href="#" class="round-button">Estimation</a>
+    </div>
+
+    <!-- New vertical menu buttons (right side) -->
+    <div class="side-menu">
+        <a href="/simulator" class="menu-button">Simulator</a>
+        <a href="/posts" class="menu-button">Videos</a>
+        <a href="/exercises" class="menu-button">Exercises</a>
+    </div>
+
+    <!-- Teacher image in middle left -->
+    <div class="teacher-container">
+        <img src="{% static 'media/teacher.png' %}" alt="Teacher" class="teacher-image">
+    </div>
+
+    <h1>Welcome to the Home Page!</h1>  
+    
+{% endblock %}

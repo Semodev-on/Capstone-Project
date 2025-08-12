@@ -1,0 +1,351 @@
+
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+    Register a New User
+{% endblock %}
+
+{% block content %}
+
+{% include 'logo.html' %}
+
+
+<style>
+   .registration-wrapper {
+        max-width: 950px; /* Wider registration box */
+        margin: 5px auto;
+        padding: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        border: 1px solid #ddd;
+    }
+
+    .registration-title {
+        background-color: #fbce00;
+        color: black;
+        text-align: center;
+        margin: 0;
+        padding: 30px 200px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    form {
+        padding: 30px;
+    }
+
+    .info-section {
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 4px solid #007bff;
+    }
+
+    .section-header {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 12px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form-control {
+        width: 100%; /* Wider text fields */
+        padding: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+        margin-bottom: 0;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #fbce00;
+        box-shadow: 0 0 0 2px rgba(251, 206, 0, 0.2);
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-submit {
+        width: 90%;
+        padding: 14px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 20px auto 0 auto;
+        display: block;
+    }
+
+    .form-submit:hover {
+        background: #0056b3;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+
+    .alert {
+        padding: 12px 30px;
+        margin: 0 0 20px 0;
+        border-radius: 0;
+        font-size: 14px;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border-left: 4px solid #28a745;
+    }
+
+    .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .login-link {
+        background-color: #007bff;
+        color: white;
+        padding: 20px 30px;
+        text-align: center;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .login-link p {
+        margin: 0;
+    }
+
+    .login-link a {
+        color: white;
+        text-decoration: underline;
+        font-weight: bold;
+        font-size: 14px;
+        transition: opacity 0.3s ease;
+    }
+
+    .login-link a:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<div class="registration-wrapper">
+    <h1 class="registration-title">Register New Account</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    <form action="/users/register/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Personal Information -->
+        <div class="info-section">
+            <div class="section-header">Personal Information</div>
+            
+
+         <!-- Profile picture upload field with preview above the Choose File button -->
+            <div class="form-group" style="display: flex; flex-direction: column; align-items: flex-start;">
+                <label for="{{ form.profile_picture.id_for_label }}" style="margin-bottom: 8px;">Profile Picture</label>
+                <!-- Preview image above the file input -->
+                <img id="profile-preview" src="{% static 'media/defaultpic.png' %}" alt="Profile Preview" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 8px; display: block;">
+                {{ form.profile_picture }}
+                <!-- Message shown when user selects an image, with file name, below the Choose File button -->
+                <span id="upload-message" style="color: green; font-size: 13px; margin-top: 8px; display: none;"></span>
+                {% if form.profile_picture.errors %}
+                    <div class="error">{{ form.profile_picture.errors }}</div>
+                {% endif %}
+            </div>
+
+            
+            <div class="name-row">
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">First Name <span class="required">*</span></label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <div class="error">{{ form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.middle_name.id_for_label }}">Middle Name</label>
+                    {{ form.middle_name }}
+                    {% if form.middle_name.errors %}
+                        <div class="error">{{ form.middle_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">Last Name <span class="required">*</span></label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <div class="error">{{ form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+
+
+            <div class="form-group">
+                <label for="{{ form.gender.id_for_label }}">Gender <span class="required">*</span></label>
+                {{ form.gender }}
+                {% if form.gender.errors %}
+                    <div class="error">{{ form.gender.errors }}</div>
+                {% endif %}
+            </div>
+
+        
+        </div>
+
+        <!-- Professional Information -->
+        <div class="info-section">
+            <div class="section-header">Professional Information</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.position.id_for_label }}">Position <span class="required">*</span></label>
+                    {{ form.position }}
+                    {% if form.position.errors %}
+                        <div class="error">{{ form.position.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.institutional_school.id_for_label }}">School/Institution <span class="required">*</span></label>
+                    {{ form.institutional_school }}
+                    {% if form.institutional_school.errors %}
+                        <div class="error">{{ form.institutional_school.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="info-section">
+            <div class="section-header">Contact Information</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.contact_number.id_for_label }}">Contact Number <span class="required">*</span></label>
+                    {{ form.contact_number }}
+                    {% if form.contact_number.errors %}
+                        <div class="error">{{ form.contact_number.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email Address <span class="required">*</span></label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="error">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Information -->
+        <div class="info-section">
+            <div class="section-header">Account Information</div>
+            
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username <span class="required">*</span></label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Password <span class="required">*</span></label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="error">{{ form.password1.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Re-enter Password <span class="required">*</span></label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="error">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <button class="form-submit" type="submit">Register</button>
+    </form>
+    
+    <div class="login-link">
+        <p>Already have an account? <a href="{% url 'users:login' %}">Login here</a></p>
+    </div>
+</div>
+
+
+<!-- Add JavaScript for showing upload message and preview -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.querySelector('input[type="file"][name="profile_picture"]');
+    const message = document.getElementById('upload-message');
+    const preview = document.getElementById('profile-preview');
+    if (input) {
+        input.addEventListener('change', function(e) {
+            if (input.files.length > 0) {
+                message.style.display = 'inline';
+                message.textContent = `You have selected an image to upload: ${input.files[0].name}`;
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                message.style.display = 'none';
+                message.textContent = '';
+                preview.src = "{% static 'media/defaultpic.png' %}";
+            }
+        });
+    }
+});
+</script>
+
+
+
+{% endblock %}
+
